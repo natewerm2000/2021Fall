@@ -1,22 +1,23 @@
 <template>
-  <div id="nav">
-    <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div id="nav">
+    <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href="https://bulma.io">
-      <img src="../assets/logo.png" width="112" height="28">
-      Be Happy
+      <img src="../assets/logo.png" height="28">
+      <h3 class="title">Be Happy</h3>
     </a>
 
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" :class = "{'is-active': isActive}" @click="isActive = !isActive">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" :class="{'is-active': isActive}" @click="isActive = !isActive">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
     </a>
   </div>
 
-  <div class="navbar-menu" :class = "{'is-active': isActive}">
+    <div class="container">
+  <div class="navbar-menu" :class="{'is-active': isActive}">
     <div class="navbar-start">
-      <a class="navbar-item"href: home>
+      <a class="navbar-item">
         Home
       </a>
 
@@ -30,7 +31,7 @@
         </a>
 
         <div class="navbar-dropdown">
-          <a class="navbar-item">
+          <a class="navbar-item" href="about.vue">
             About
           </a>
           <a class="navbar-item">
@@ -46,45 +47,34 @@
         </div>
       </div>
     </div>
+    </div>
 
     <div class="navbar-end">
       <div class="navbar-item">
-        <div class="buttons">
-          <a class="button is-primary">
-            <strong>Sign up</strong>
-          </a>
-          <a class="button is-light">
-            Log in
-          </a>
-        </div>
+          <login-badge />
       </div>
     </div>
   </div>
 </nav>
-  </div>
-  <router-view/>
+</div>
 </template>
 
-<style lang="scss">
-
-
-
-
-</style>
-
 <script>
-import LoginBadge from '.\LoginBadge'
+import LoginBadge from './LoginBadge.vue'
 
 export default {
-  data(){
-      return{
-          isActive: false
-      }
-  },
+    data() {
+        return {
+            isActive: false
+        } 
+    },
     components: {
         LoginBadge
     }
-  }
-  
+
 }
 </script>
+
+<style>
+
+</style>
