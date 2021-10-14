@@ -7,7 +7,7 @@ export default session;
 
 export function Login() {
     session.user = {
-        FirstName: "Ryan",
-        LastName:  "Arnold",
+        FirstName: "Nathaniel",
+        LastName:  "Alexander",
     }
 }
