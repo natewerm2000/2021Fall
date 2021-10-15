@@ -17,13 +17,17 @@
     <div class="container">
   <div class="navbar-menu" :class="{'is-active': isActive}">
     <div class="navbar-start">
-      <a class="navbar-item">
+      
+        <router-link class = "navbar-item is-tab" to = "/" active-class="is-active">
         Home
-      </a>
+        </router-link>
 
-      <a class="navbar-item">
-        Documentation
-      </a>
+      <router-link class = "navbar-item is-tab" to = "/feed" active-class="is-active">
+        Feed
+      </router-link>
+      <router-link class = "navbar-item is-tab" to = "/documentation" active-class="is-active">
+      Documentation
+      </router-link>
 
       <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link">
