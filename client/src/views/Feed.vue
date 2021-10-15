@@ -2,38 +2,29 @@
   <div class="section">
       <h1 class="title">
           Feed Page
-        
-
-
-
       </h1>
-        <div class="columns">
-            <div class="column is-one-third is-offset-one-third">
+      <div class="columns">
+        <div class="column is-one-third is-offset-one-third">
 
-              <div class="post" v-for="p in posts" :key="p.src"> 
-<post :post= "p"/>
-  
-              </div>
-            </div>
-            <div class = "post">
-
-              </div>
-
-            cichwiudjbhajwabd
+          <div class="post" v-for="p in posts" :key="p.src">
+            <Post :post="p"/>
           </div>
+              
+        </div>
+      </div>
   </div>
 </template>
 
 <script>
-import session from "../servics/posts";
-import { GetWall } from "../services/session";
-import post from './post.vue';
+import Post from '../components/Post.vue';
+import session from "../services/session";
+import { GetWall } from "../services/posts";
 
 export default {
-  components: { post },
-data: ()=> ({
-  posts: GetWall(session.user.handle)
-})
+  components: { Post },
+    data: ()=> ({
+      posts: GetWall(session.user.handle)
+    })
 }
 </script>
 
