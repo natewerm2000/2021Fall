@@ -2,11 +2,14 @@
   <div class="container">
     <div class="column">
       <div class="column">
-        
+
+      <Nav/>
+      <Messages/>
+        <router-view/>
       </div>
     </div>
-    <Nav />
-    <router-view/>
+    
+    
   </div>
 </template>
 
@@ -19,7 +22,8 @@ import Nav from "./components/Nav";
 
 export default {
   components: {
-    Nav
+    Nav,
+    Messages
   }
 } 
 </script>
