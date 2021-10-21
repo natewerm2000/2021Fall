@@ -25,7 +25,7 @@
       <router-link class = "navbar-item is-tab" to = "/feed" active-class="is-active">
         Feed
       </router-link>
-      <router-link class = "navbar-item is-tab" to = "/documentation" active-class="is-active">
+      <router-link class = "navbar-item is-tab" to = "/about" active-class="is-active">
       Documentation
       </router-link>
 

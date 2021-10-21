@@ -19,6 +19,7 @@
 
 <script> 
 import Nav from "./components/Nav";
+import Messages from "./components/Messages";
 
 export default {
   components: {
