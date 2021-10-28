@@ -1,6 +1,4 @@
-/* B"H
-*/
-import { GetByHandle } = require ("./users");
+const { GetByHandle } = require( "./users");
 
 const list = [
     { 
@@ -50,34 +48,36 @@ const listWithOwner = ()=> list.map(x => ({
     user: GetByHandle(x.user_handle) 
 }) );
 
-model.export.GetAll = function GetAll() {
+module.exports.GetAll = function GetAll() {
     return listWithOwner();
 }
 
-model.export.GetWall = function GetWall(handle) {
+module.exports.GetWall = function GetWall(handle) {
     return listWithOwner().filter(post=> post.user_handle == handle);
 }
 
-model.export.GetFeed = function GetFeed(handle) { return listWithOwner()
+module.exports.GetFeed = function GetFeed(handle) { return listWithOwner()
     .filter(post=> GetByHandle(handle).following.some(f=> f.handle == post.user_handle && f.isApproved) );     }
 
 
-model.export.Get = function Get(post_id) { return list[post_id]; }
-model.export.Add = function Add(post) {
+module.exports.Get = function Get(post_id) { return list[post_id]; }
+module.exports.Add = function Add(post) {
     if(!post.user_handle){
         throw {code: 422, msg: "Post must have an Owner"}
     }
      list.push(post);
      return { ...post };
 }
-model.export.Update = function Update(post_id, post) {
+module.exports.Update = function Update(post_id, post) {
     const oldObj = list[post_id];
     const newObj = { ...oldObj, ...post }
     list[post_id] = newObj ;
     return newObj;
 }
-model.export = function Delete(post_id) {
+module.exports.Delete = function Delete(post_id) {
     const post = list[post_id];
     list.splice(post_id, 1);
     return post;
-}
+} 
+
+module.exports.Search = q => list.filter(x => x.caption.includes(q));
