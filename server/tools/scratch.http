@@ -1,0 +1,39 @@
+http://localhost:3100/users
+
+###
+
+http://localhost:3100/users/1
+
+###
+
+http://localhost:3100/posts
+
+###
+
+http://localhost:3100/posts/1
+NP-DEMO: Best Class Ever
+
+###
+
+POST http://localhost:3100/posts
+Content-Type: application/json
+
+{
+ "src": "https://apod.nasa.gov/apod/image/2111/MilkyWayWaterfall_XieJie_960.jpg",
+ "Alt": "A Waterfall and the Milky Way",
+ "caption": "A Waterfall and the Milky Way",
+ "user_handle": "@JewPaltz",
+ "isPublic": true
+} 
+###
+
+https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY
+
+###
+
+POST http://localhost:3100/users/login
+Content-Type: application/json
+    {
+        "handle": "@pedo",
+        "password": "password",
+    }
