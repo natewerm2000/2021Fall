@@ -1,4 +1,10 @@
+/* B"H
+*/
 const bcrypt = require('bcrypt');
+const { result } = require('lodash');
+const { client } = require('./mongo')
+
+const collection = client.db(process.env.MONGO_DB).collection('users');
 
 const list = [
     { 
@@ -41,28 +47,33 @@ const list = [
 
 ];
 
-module.exports.GetAll = function GetAll() { return list; }
+module.exports.GetAll = function GetAll() { return collection.find().toArray() ; }
 
-module.exports.Get = user_id => list[user_id]; 
+module.exports.Get = user_id => collection.findOne({_id: user_id})
 
 module.exports.GetByHandle = function GetByHandle(handle) { return ({ ...list.find( x => x.handle == handle ), password: undefined }); } 
 
-module.exports.Add = function Add(user, cb) {
+module.exports.Add = async function Add(user) {
     if(!user.firstName){
-        cb ({ code: 422, msg: "First Name is required" })
+         return Promise.reject( { code: 422, msg: "First Name is required" } )
     }
-    //user.password = hash(user.password);
 
-    bcrypt.hash(user.password, +process.env.SALT_ROUNDS, function(err, hash){
-        user.password = hash;   
+    const hash = await bcrypt.hash(user.password, +process.env.SALT_ROUNDS)
+    
+    .then(hash => {
+        console.log({
+            user, salt: process.env.SALT_ROUNDS, hash
+        })
+        
+        user.password = hash;
 
         list.push(user);
-        cb(null ,{ ...user, password: undefined });
+        const user2 = await collection.insertOne(user);
+        user._id = user2.insertedId;
 
+        return { ...user, password: undefined };
     });
 }
-
-  
 
 
 module.exports.Update = function Update(user_id, user) {
@@ -89,19 +100,36 @@ module.exports.Delete = function Delete(user_id) {
     return user;
 }
 
-module.exports.Login = function Login(handle, password, cb){
+module.exports.Login = async function Login(handle, password){
     console.log({ handle, password})
-    const user = list.find(x=> x.handle == handle);
-    if(!user) cb({ code: 401, msg: "Sorry there is no user with that handle" });
-
-
-    bcrypt.compare(password, user.password, function(err, result){
-    if( ! result ){
-         return cb({ code: 401, msg: "Wrong Password" });
+    const user = list.findOne({handle});
+    if(!user){
+        return Promise.reject( { code: 401, msg: "Sorry there is no user with that handle" });
     }
 
-    const data = { ...user, password: undefined };
 
-    cb (null,{ user: data });
-});
+    const result = await bcrypt.compare(password, user.password)
+
+        
+    if( ! result ){
+         throw { code: 401, msg: "Wrong Password" } ;
+    }
+    
+    const data = { ...user, password: undefined };
+    
+    return { user: data };
+
+
+
+    
+}
+
+module.exports.Async = async ()=>{
+
+    console.log("Inner function 1");
+
+    await Promise.resolve();
+
+    console.log("Inner function 2");
+
 }

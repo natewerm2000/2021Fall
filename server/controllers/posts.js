@@ -17,13 +17,11 @@ app
 
         res.send(model.Get(req.params.id));
     })
-.post("/",(req, res, next) =>{
-    const newPost = model.Add(req.body)
+    .post("/", (req, res, next) =>{
+        const newPost = model.Add(req.body)
 
-    res.send(newPost);
+        res.status(201).send(newPost);
+    })
 
-
-    
-})
 
 module.exports = app;
